@@ -12,6 +12,8 @@ class Message {
     required this.text,
     //required this.unread,
   });
+
+  get color => null;
 }
 
 //example chats on home screen

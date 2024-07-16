@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:profile_photo/profile_photo.dart';
 
 class User {
   final int id;
   final String name;
-  dynamic profilePhoto;
+  final Color color;
+  
 
   User({
     required this.id,
     required this.name,
-    required this.profilePhoto,
+    required this.color,
+    
   });
 }
 
@@ -17,64 +18,20 @@ class User {
 final User user1 = User(
   id: 1,
   name: 'Виктор Власов',
-  profilePhoto: ProfilePhoto(
-    totalWidth: 55,
-    cornerRadius: 70, 
-    color: Colors.green,
-    textPadding: 11,
-    name: 'Виктор Власов',
-    fontColor: Colors.white,
-    nameDisplayOption: NameDisplayOptions.initials,
-    fontWeight: FontWeight.bold,
-    badgeSize: 30,
-    badgeAlignment: Alignment.topLeft,
-  ),  
+  color: const Color.fromARGB(255, 83, 194, 87),  
 );
 final User user2 = User(
   id: 2,
   name: 'Саша Алексеев',
-  profilePhoto: ProfilePhoto(
-    totalWidth: 55,
-    cornerRadius: 70, 
-    color: Colors.orange,
-    textPadding: 11,
-    name: 'Саша Алексеев',
-    fontColor: Colors.white,
-    nameDisplayOption: NameDisplayOptions.initials,
-    fontWeight: FontWeight.bold,
-    badgeSize: 30,
-    badgeAlignment: Alignment.topLeft,
-  ),  
+  color: const Color.fromARGB(255, 244, 151, 10),
 );
 final User user3 = User(
   id: 3,
   name: 'Пётр Жаринов',
-  profilePhoto: ProfilePhoto(
-    totalWidth: 55,
-    cornerRadius: 70, 
-    color: Colors.blue,
-    textPadding: 11,
-    name: 'Пётр Жаринов',
-    fontColor: Colors.white,
-    nameDisplayOption: NameDisplayOptions.initials,
-    fontWeight: FontWeight.bold,
-    badgeSize: 30,
-    badgeAlignment: Alignment.topLeft,
-  ),  
+  color: const Color.fromARGB(255, 37, 148, 239),
 );
 final User user4 = User(
   id: 4,
   name: 'Алина Жукова',
-  profilePhoto: ProfilePhoto(
-    totalWidth: 55,
-    cornerRadius: 70, 
-    color: Colors.orange,
-    textPadding: 11,
-    name: 'Алина Жукова',
-    fontColor: Colors.white,
-    nameDisplayOption: NameDisplayOptions.initials,
-    fontWeight: FontWeight.bold,
-    badgeSize: 30,
-    badgeAlignment: Alignment.topLeft,
-  ),  
+  color: const Color.fromARGB(255, 244, 151, 10), 
 );
