@@ -1,27 +1,17 @@
-import 'package:chat_app/models/message_model.dart';
+import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:profile_photo/profile_photo.dart';
-import 'package:grouped_list/grouped_list.dart';
 import 'dart:math' as math;
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class ChatPageWithImage extends StatefulWidget {
+  const ChatPageWithImage ({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<ChatPageWithImage> createState() => _ChatPageWithImageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
-  List<Message> messages = [
-    Message(
-      text: 'Уже сделал?',
-      date: DateTime.now(),
-      isSentByMe: true,
-    ),
-    Message(text: 'Хорошо', date: DateTime(2022,01,27), isSentByMe: false),
-    Message(text: 'Сделай мне кофе, пожалуйста', date: DateTime(2022,01,27, 21,41), isSentByMe: true),
-  ].reversed.toList();
+class _ChatPageWithImageState extends State<ChatPageWithImage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,50 +67,86 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: GroupedListView<Message, DateTime>(
-              padding: const EdgeInsets.all(20),
-              reverse: true,
-              order: GroupedListOrder.DESC,
-              useStickyGroupSeparators: false,
-              floatingHeader: true,
-              elements: messages,
-              groupBy: (message) => DateTime(
-                message.date.year,
-                message.date.month,
-                message.date.day,
-              ),
-              groupHeaderBuilder: (Message message) => Stack(
-                alignment: Alignment.center,
-                children: [
-                  const Divider(indent: 20, endIndent: 20),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    child: Text(
-                      DateFormat.yMd().format(message.date),
-                      style: const TextStyle(color: Colors.black54),
-                    ),
-                  )
-                ],
-              ),
-              itemBuilder: (context, Message message) => Align(
-                alignment: message.isSentByMe
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Card(
-                  elevation: 8,
-                  color: const Color.fromARGB(255, 99, 226, 103),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(message.text),
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const BubbleNormalImage(
+                  id: 'id001', 
+                  image: Image(image: AssetImage('images/mountain.jpg')),
+                  isSender: true,
+                  tail: true,
+                  seen: true,
+                  color: Color.fromARGB(255, 94, 215, 98),
+                  //trailing: Text('Какие горы', style: TextStyle(fontSize: 15, color: Colors.black)),
+                ),
+                const BubbleSpecialThree(
+                  text: 'Какие горы',
+                  isSender: true,
+                  color: Color.fromARGB(255, 94, 215, 98),
+                  tail: true,
+                  seen: true,
+                  textStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black
                   ),
                 ),
-              ),
+                const SizedBox(height: 15),
+                DateChip(date: DateTime(2022,01,27, 21,41)),
+                const SizedBox(height: 15),
+                const BubbleSpecialThree(
+                  text: 'Сделай мне кофе, пожалуйста',
+                  isSender: true,
+                  color: Color.fromARGB(255, 94, 215, 98),
+                  tail: true,
+                  seen: true,
+                  textStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black
+                  ),
+                ),
+                BubbleNormalImage(
+                  id: 'id002', 
+                  image: const Image(image: AssetImage('images/mountain_2.webp')),
+                  color: Colors.grey.shade400,
+                  isSender: false,
+                  tail: true,
+                ),
+                BubbleSpecialThree(
+                  text: 'Хорошо',
+                  isSender: false,
+                  tail: true,
+                  color: Colors.grey.shade300,
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.black
+                  ),
+                ),
+                DateChip(date: DateTime.now()),
+                const BubbleSpecialThree(
+                  text: 'Уже сделал?',
+                  tail: true,
+                  color: Color.fromARGB(255, 94, 215, 98),
+                  sent: true,
+                  textStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black
+                  ),
+                ),
+                const BubbleSpecialThree(
+                  text: 'Мне просто срочно нужно',
+                  tail: true,
+                  color: Color.fromARGB(255, 94, 215, 98),
+                  sent: true,
+                  textStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black
+                  ),
+                )
+              ]
             ),
           ),
           Stack(
@@ -136,7 +162,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Row(
                     children: <Widget>[
                       FloatingActionButton(
-                        heroTag: 'attach',
+                        heroTag: null,
                         onPressed: () {},
                         backgroundColor: Colors.grey.shade300,
                         elevation: 0,
@@ -163,20 +189,12 @@ class _ChatPageState extends State<ChatPage> {
                               borderSide: BorderSide(color: Colors.grey.shade300),
                             ),
                           ),
-                          onSubmitted: (text) {
-                            final message = Message(
-                              text: text, 
-                              date: DateTime.now(), 
-                              isSentByMe: true,
-                            );
-          
-                            setState(() => messages.add(message));
-                          },
+                          onSubmitted: (text) {},
                         ),
                       ),
                       const SizedBox(width: 8),
                       FloatingActionButton(
-                        heroTag: 'audio',
+                        heroTag: null,
                         onPressed: () {},
                         backgroundColor: Colors.grey.shade300,
                         elevation: 0,

@@ -18,7 +18,7 @@ class User {
 final User user1 = User(
   id: 1,
   name: 'Виктор Власов',
-  color: const Color.fromARGB(255, 83, 194, 87),  
+  color: const Color.fromARGB(255, 99, 226, 103),  
 );
 final User user2 = User(
   id: 2,

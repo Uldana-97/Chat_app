@@ -1,4 +1,4 @@
-import 'package:chat_app/models/message_model.dart';
+import 'package:chat_app/models/last_message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_photo/profile_photo.dart';
 
@@ -39,16 +39,71 @@ class HomePage extends StatelessWidget {
                         width: 300,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: "Поиск",
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300),
-                              prefixIcon: Icon(Icons.search_rounded,
-                                  color: Colors.grey.shade600, size: 25),
-                              border: InputBorder.none,
+                          child: InkWell(
+                            onDoubleTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    'Текст',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  content: Padding(
+                                    padding: const EdgeInsets.only(left: 5),
+                                    child: Container(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: 250,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5),
+                                                child: TextFormField(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Поиск",
+                                                    hintStyle: TextStyle(
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w300),
+                                                    prefixIcon: Icon(
+                                                        Icons.search_rounded,
+                                                        color: Colors
+                                                            .grey.shade600,
+                                                        size: 25),
+                                                    border: InputBorder.none,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ]),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "Поиск",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w300),
+                                prefixIcon: Icon(Icons.search_rounded,
+                                    color: Colors.grey.shade600, size: 25),
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
                         ),
@@ -64,10 +119,10 @@ class HomePage extends StatelessWidget {
               shrinkWrap: true,
               itemCount: chats.length,
               itemBuilder: (BuildContext context, int index) {
-                final Message chat = chats[index];
+                final LastMessage chat = chats[index];
                 return Container(
                   padding: const EdgeInsets.only(
-                    left: 10, right: 0, top: 12, bottom: 12),
+                      left: 10, right: 0, top: 12, bottom: 12),
                   decoration: BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.4),
@@ -80,6 +135,9 @@ class HomePage extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, 'chatPage');
+                        },
+                        onDoubleTap: () {
+                          Navigator.pushNamed(context, 'chatPageWithImage');
                         },
                         child: SizedBox(
                           height: 60,
